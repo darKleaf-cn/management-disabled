@@ -4,12 +4,12 @@
       :inline="true"
       :model="searchForm"
       ref="searchForm"
-      label-width="90px"
+      label-width="150px"
     >
-      <el-form-item label="用户手机号">
+      <el-form-item label="供应商联系方式">
         <el-input
-          v-model="searchForm.userPhone"
-          placeholder="请输入用户手机号"
+          v-model="searchForm.supplierPhone"
+          placeholder="请输入供应商联系方式"
         ></el-input>
       </el-form-item>
       <el-form-item class="form-button">
@@ -22,30 +22,55 @@
         type="primary"
         icon="el-icon-plus"
         @click="dialogFormVisible = true"
-        >新增用户</el-button
+        >新增供应商</el-button
       >
     </div>
     <div class="table">
       <el-table
         ref="multipleTable"
-        :data="userData"
+        :data="supplierData"
         tooltip-effect="dark"
         style="width: 100%"
         border
         stripe
       >
         <el-table-column
-          prop="userId"
-          label="用户id"
+          prop="supplierId"
+          label="供应商id"
           align="center"
         ></el-table-column>
-        <el-table-column prop="userName" label="用户名称" align="center">
+        <el-table-column prop="supplierName" label="供应商名称" align="center">
         </el-table-column>
-        <el-table-column prop="userPhone" label="用户手机号" align="center">
+        <el-table-column
+          prop="supplierPhone"
+          label="供应商手机号"
+          align="center"
+        >
         </el-table-column>
-        <el-table-column prop="userAddress" label="用户地址" align="center">
+        <el-table-column
+          prop="supplierAddress"
+          label="供应商地址"
+          align="center"
+        >
         </el-table-column>
-        <el-table-column prop="userDescribe" label="用户描述" align="center">
+        <el-table-column
+          prop="supplierDescribe"
+          label="供应商描述"
+          align="center"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="supplierGoods"
+          label="供应商经营商品"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-tag
+              v-for="item in scope.row.supplierGoods"
+              :key="item.catalogId"
+              >{{ item.catalogName }}</el-tag
+            >
+          </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center">
           <template slot-scope="scope">
@@ -60,7 +85,7 @@
               type="danger"
               size="small"
               plain
-              @click="delete1(scope.row.userId)"
+              @click="delete1(scope.row.supplierId)"
               >删除</el-button
             >
           </template>
@@ -79,35 +104,52 @@
       >
       </el-pagination>
     </div>
-    <el-dialog title="用户信息" :visible.sync="dialogFormVisible">
-      <el-form :model="userForm" label-width="100px" :rules="rules" ref="form">
-        <el-form-item label="用户名称" prop="userName">
-          <el-input v-model="userForm.userName"></el-input>
+    <el-dialog title="供应商信息" :visible.sync="dialogFormVisible" :show-close="false">
+      <el-form
+        :model="supplierForm"
+        label-width="150px"
+        :rules="rules"
+        ref="form"
+      >
+        <el-form-item label="供应商名称" prop="supplierName">
+          <el-input v-model="supplierForm.supplierName"></el-input>
         </el-form-item>
-        <el-form-item label="用户手机号" prop="userPhone">
-          <el-input v-model="userForm.userPhone" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="用户地址" prop="userAddress">
+        <el-form-item label="供应商联系方式" prop="supplierPhone">
           <el-input
-            v-model="userForm.userAddress"
+            v-model="supplierForm.supplierPhone"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="用户描述" prop="userDescribe">
+        <el-form-item label="供应商地址" prop="supplierAddress">
           <el-input
-            v-model="userForm.userDescribe"
+            v-model="supplierForm.supplierAddress"
             autocomplete="off"
           ></el-input>
+        </el-form-item>
+        <el-form-item label="供应商描述" prop="supplierDescribe">
+          <el-input
+            v-model="supplierForm.supplierDescribe"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="供应商经营商品" prop="supplierGoods">
+          <el-select
+            v-model="supplierForm.supplierGoods"
+            multiple
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="item in catalogs"
+              :key="item.catalogId"
+              :label="item.catalogName"
+              :value="item.catalogId"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button
-          @click="
-            dialogFormVisible = false;
-            queryList();
-          "
-          >取 消</el-button
-        >
+        <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="check">确 定</el-button>
       </div>
     </el-dialog>
@@ -115,41 +157,56 @@
 </template>
 
 <script>
-import { userList, userDelete, userUpdate, userAdd } from '@/api/user';
+import {
+  supplierList,
+  supplierDelete,
+  supplierUpdate,
+  supplierAdd
+} from '@/api/supplier';
 import Message from '@/util/message';
 import { mapState } from 'vuex';
+import catalogs from '../../assets/catalog';
 export default {
-  name: 'UserList',
+  name: 'SupplierList',
   data() {
     return {
       searchForm: {
-        userPhone: '',
+        supplierPhone: '',
         page: 1,
         size: 5
       },
       total: 0,
-      userData: [],
+      supplierData: [],
       dialogFormVisible: false,
-      userForm: {
-        userName: '',
-        userPhone: '',
-        userAddress: '',
-        userDescribe: ''
+      supplierForm: {
+        supplierName: '',
+        supplierPhone: '',
+        supplierAddress: '',
+        supplierDescribe: '',
+        supplierGoods: []
       },
       rules: {
-        userName: [
-          { required: true, message: '请输入用户名称', trigger: 'change' }
+        supplierName: [
+          { required: true, message: '请输入供应商名称', trigger: 'change' }
         ],
-        userPhone: [
-          { required: true, message: '请输入用户手机号', trigger: 'change' }
+        supplierPhone: [
+          { required: true, message: '请输入供应商联系方式', trigger: 'change' }
         ],
-        userAddress: [
-          { required: true, message: '请输入用户地址', trigger: 'change' }
+        supplierAddress: [
+          { required: true, message: '请输入供应商地址', trigger: 'change' }
         ],
-        userDescribe: [
-          { required: true, message: '请输入用户描述', trigger: 'change' }
+        supplierDescribe: [
+          { required: true, message: '请输入供应商描述', trigger: 'change' }
+        ],
+        supplierGoods: [
+          {
+            required: true,
+            message: '供应商经营商品不能为空',
+            trigger: 'change'
+          }
         ]
-      }
+      },
+      catalogs: catalogs
     };
   },
   methods: {
@@ -158,7 +215,7 @@ export default {
     },
     resetForm() {
       this.searchForm = {
-        userPhone: '',
+        supplierPhone: '',
         page: 1,
         size: 5
       };
@@ -182,17 +239,17 @@ export default {
       if ((params.page - 1) * params.size > this.total) {
         return;
       }
-      const res = await userList(params);
+      const res = await supplierList(params);
       if (res.code === 200) {
         console.log(res);
         this.total = res.data.total;
-        this.userData = res.data.userList;
+        this.supplierData = res.data.supplierList;
       } else {
         Message('error', res.message);
       }
     },
-    async delete1(userId) {
-      this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
+    async delete1(supplierId) {
+      this.$confirm('此操作将删除该供应商, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -200,41 +257,47 @@ export default {
         .then(() => {
           const params = {
             adminId: this.adminId,
-            userId
+            supplierId
           };
-          userDelete(params).then((res) => {
+          supplierDelete(params).then((res) => {
             if (res.code === 200) {
               Message('success', '删除成功');
             } else {
               Message('error', res.message);
             }
+						this.queryList();
           });
         })
         .catch(() => {});
     },
-    update1(userForm) {
+    update1(supplierForm) {
       this.dialogFormVisible = true;
-      this.userForm = userForm;
+			supplierForm = JSON.parse(JSON.stringify(supplierForm));
+      const arr = supplierForm.supplierGoods.map((item) => item.catalogId);
+      this.supplierForm = supplierForm;
+      this.supplierForm.supplierGoods = arr;
     },
     async update() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           const params = {
             adminId: this.adminId,
-            ...this.userForm
+            ...this.supplierForm
           };
-          const res = await userUpdate(params);
+          console.log(params);
+          const res = await supplierUpdate(params);
           if (res.code === 200) {
             Message('success', '添加成功');
           } else {
             Message('error', res.message);
           }
           this.dialogFormVisible = false;
-          this.userForm = {
-            userName: '',
-            userPhone: '',
-            userAddress: '',
-            userDescribe: ''
+          this.supplierForm = {
+            supplierName: '',
+            supplierPhone: '',
+            supplierAddress: '',
+            supplierDescribe: '',
+            supplierGoods: []
           };
           this.queryList();
         }
@@ -242,35 +305,47 @@ export default {
     },
     async add() {
       this.$refs.form.validate(async (valid) => {
-        console.log(valid, this.userForm);
+        console.log(valid, this.supplierForm);
         if (valid) {
           const params = {
             adminId: this.adminId,
-            ...this.userForm
+            ...this.supplierForm
           };
-          const res = await userAdd(params);
+          const res = await supplierAdd(params);
           if (res.code === 200) {
             Message('success', '添加成功');
           } else {
             Message('error', res.message);
           }
           this.dialogFormVisible = false;
-          this.userForm = {
-            userName: '',
-            userPhone: '',
-            userAddress: '',
-            userDescribe: ''
+          this.supplierForm = {
+            supplierName: '',
+            supplierPhone: '',
+            supplierAddress: '',
+            supplierDescribe: '',
+            supplierGoods: []
           };
           this.queryList();
         }
       });
     },
     check() {
-      if (this.userForm.userId) {
+      if (this.supplierForm.supplierId) {
         this.update();
       } else {
         this.add();
       }
+    },
+    cancel() {
+      this.dialogFormVisible = false;
+      this.supplierForm = {
+        supplierName: '',
+        supplierPhone: '',
+        supplierAddress: '',
+        supplierDescribe: '',
+        supplierGoods: []
+      };
+      this.queryList();
     }
   },
   computed: {
@@ -310,10 +385,16 @@ export default {
   .table {
     background-color: #ffffff;
     padding-left: 20px;
+    .el-tag {
+      margin: 2px;
+    }
   }
   .pagination {
     display: flex;
     flex-direction: row-reverse;
+  }
+  .el-select {
+    display: block;
   }
 }
 </style>

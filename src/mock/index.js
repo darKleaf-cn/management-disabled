@@ -4,6 +4,7 @@ import { catalogQueryList } from './catalog';
 import { register, login, logout, userList, userDelete, userUpdate, userAdd } from './user';
 import { uploadImage } from './image';
 import { orderQueryList } from './order';
+import { supplierAdd, supplierDelete, supplierList, supplierUpdate } from './supplier';
 
 Mock.setup({
   timeout: '300-600'
@@ -24,6 +25,11 @@ Mock.mock(/\/user\/list/, 'post', userList);
 Mock.mock(/\/user\/delete/, 'post', userDelete);
 Mock.mock(/\/user\/update/, 'post', userUpdate);
 Mock.mock(/\/user\/add/, 'post', userAdd);
+
+Mock.mock(/\/supplier\/list/, 'post', supplierList);
+Mock.mock(/\/supplier\/delete/, 'post', supplierDelete);
+Mock.mock(/\/supplier\/update/, 'post', supplierUpdate);
+Mock.mock(/\/supplier\/add/, 'post', supplierAdd);
 
 // 图片相关
 Mock.mock(/\/upload-img/, 'post', uploadImage);
