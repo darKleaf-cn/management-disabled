@@ -68,7 +68,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(['adminId', 'adminName']),
+    ...mapState(['adminId', 'adminName', 'token']),
     navRouter() {
       return this.$router.options.routes.filter((router) => {
         return !router.hidden;
@@ -78,7 +78,8 @@ export default {
   methods: {
     async handleClick() {
       const params = {
-        adminId: this.adminId
+        adminId: this.adminId,
+				token: this.token
       };
       const res = await logout(params);
       if (res.code === 200) {

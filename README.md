@@ -353,21 +353,23 @@
 }
 ```
 
-#### 2.1.2 返回结果
+#### 3.1.2 返回结果
 
-| 参数名称                        | 类型   | 必要 | 描述           |
-| :------------------------------ | :----- | :--- | :------------- |
-| code                            | int    | 必要 | 状态码         |
-| message                         | string | 必要 |
-| data                            | object | 必要 | &nbsp;         |
-| &emsp;total                     | int    | 必要 | 供应商总数     |
-| &emsp;supplierList              | array  | 必要 | 供应商数组     |
-| &emsp;&emsp;supplierId          | string | 必要 | 供应商 id      |
-| &emsp;&emsp;supplierName        | string | 必要 | 供应商名称     |
-| &emsp;&emsp;supplierPhone       | string | 必要 | 供应商手机号   |
-| &emsp;&emsp;supplierAddress     | string | 必要 | 供应商地址     |
-| &emsp;&emsp;supplierDescribe    | string | 必要 | 供应商描述     |
-| &emsp;&emsp;supplierGoods       | array  | 必要 | 供应商商品数组 |
+| 参数名称                      | 类型   | 必要 | 描述           |
+| :---------------------------- | :----- | :--- | :------------- |
+| code                          | int    | 必要 | 状态码         |
+| message                       | string | 必要 |
+| data                          | object | 必要 | &nbsp;         |
+| &emsp;total                   | int    | 必要 | 供应商总数     |
+| &emsp;supplierList            | array  | 必要 | 供应商数组     |
+| &emsp;&emsp;supplierId        | string | 必要 | 供应商 id      |
+| &emsp;&emsp;supplierName      | string | 必要 | 供应商名称     |
+| &emsp;&emsp;supplierPhone     | string | 必要 | 供应商联系方式 |
+| &emsp;&emsp;supplierAddress   | string | 必要 | 供应商地址     |
+| &emsp;&emsp;supplierDescribe  | string | 必要 | 供应商描述     |
+| &emsp;&emsp;supplierGoods     | array  | 必要 | 供应商商品数组 |
+| &emsp;&emsp;&emsp;catalogId   | string | 必要 | 商品类型 id    |
+| &emsp;&emsp;&emsp;catalogName | string | 必要 | 商品类型名称   |
 
 请求实例：
 
@@ -380,46 +382,69 @@
 		supplierList: [
 			{
 				supplierId: "12312312",
-				supplierName: "张三",
+				supplierName: "小米",
 				supplierPhone: "1123321323",
 				supplierAddress: "湖北省武汉市",
-				supplierDescribe: "手残"
+				supplierDescribe: "最好的公司",
+				supplierGoods: [
+					{
+						catalogId: "1",
+						catalogName: "轮椅"
+					}，
+					{
+						catalogId: "2",
+						catalogName: "助听器"
+					}
+				]
 			}
 		]
 	}
 }
 ```
 
-### 2.2 供应商新增
+### 3.2 供应商新增
 
 - **地址：** /add
 
-#### 2.2.1 请求参数
+#### 3.2.1 请求参数
 
-| 参数名称            | 类型   | 必要 | 描述                                     |
-| :------------------ | :----- | :--- | :--------------------------------------- |
-| Header              | &nbsp; | 必要 | 请求报文头                               |
-| &emsp;Authorization | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
-| body                | &nbsp; | 必要 | &nbsp;                                   |
-| &emsp;adminId       | string | 必要 | 管理员 id                                |
-| &emsp;userName      | string | 必要 | 用户名称                                 |
-| &emsp;userPhone     | string | 必要 | 用户手机号                               |
-| &emsp;userAddress   | string | 必要 | 用户地址                                 |
-| &emsp;userDescribe  | string | 必要 | 用户描述                                 |
+| 参数名称                | 类型   | 必要 | 描述                                     |
+| :---------------------- | :----- | :--- | :--------------------------------------- |
+| Header                  | &nbsp; | 必要 | 请求报文头                               |
+| &emsp;Authorization     | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
+| body                    | &nbsp; | 必要 | &nbsp;                                   |
+| &emsp;adminId           | string | 必要 | 管理员 id                                |
+| &emsp;supplierName      | string | 必要 | 供应商名称                               |
+| &emsp;supplierPhone     | string | 必要 | 供应商联系方式                           |
+| &emsp;supplierAddress   | string | 必要 | 供应商地址                               |
+| &emsp;supplierDescribe  | string | 必要 | 供应商描述                               |
+| &emsp;supplierGoods     | array  | 必要 | 供应商商品数组                           |
+| &emsp;&emsp;catalogId   | string | 必要 | 商品类型 id                              |
+| &emsp;&emsp;catalogName | string | 必要 | 商品类型名称                             |
 
 请求实例：
 
 ```
 {
 	adminId: "123123123",
-	userName: "张三",
-	userPhone: "12312321321",
-	userAddress: "湖北省武汉市",
-	userDescribe: "撒后餐"
+	supplierName: "小米",
+	supplierPhone: "1123321323",
+	supplierAddress: "湖北省武汉市",
+	supplierDescribe: "最好的公司",
+	supplierGoods: [
+		{
+			catalogId: "1",
+			catalogName: "轮椅"
+		}，
+		{
+			catalogId: "2",
+			catalogName: "助听器"
+		}
+	]
 }
 ```
 
-#### 2.2.2 返回结果
+#### 3.2.2 返回结果
 
 | 参数名称 | 类型   | 必要 | 描述   |
 | :------- | :----- | :--- | :----- |
@@ -435,11 +460,11 @@
 }
 ```
 
-### 2.3 供应商删除
+### 3.3 供应商删除
 
 - **地址：** /delete
 
-#### 2.3.1 请求参数
+#### 3.3.1 请求参数
 
 | 参数名称            | 类型   | 必要 | 描述                                     |
 | :------------------ | :----- | :--- | :--------------------------------------- |
@@ -447,18 +472,18 @@
 | &emsp;Authorization | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
 | body                | &nbsp; | 必要 | &nbsp;                                   |
 | &emsp;adminId       | string | 必要 | 管理员 id                                |
-| &emsp;userId        | string | 必要 | 用户 id                                  |
+| &emsp;supplierId    | string | 必要 | 供应商 id                                |
 
 请求实例：
 
 ```
 {
 	adminId: "123123123",
-	userId: "232131232"
+	supplierId: "232131232"
 }
 ```
 
-#### 2.3.2 返回结果
+#### 3.3.2 返回结果
 
 | 参数名称 | 类型   | 必要 | 描述   |
 | :------- | :----- | :--- | :----- |
@@ -474,34 +499,47 @@
 }
 ```
 
-### 2.4 供应商修改
+### 3.4 供应商修改
 
 - **地址：** /update
 
-#### 2.4.1 请求参数
+#### 3.4.1 请求参数
 
-| 参数名称            | 类型   | 必要 | 描述                                     |
-| :------------------ | :----- | :--- | :--------------------------------------- |
-| Header              | &nbsp; | 必要 | 请求报文头                               |
-| &emsp;Authorization | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
-| body                | &nbsp; | 必要 | &nbsp;                                   |
-| &emsp;adminId       | string | 必要 | 管理员 id                                |
-| &emsp;userId        | string | 必要 | 用户 id                                  |
-| &emsp;userName      | string | 必要 | 用户名称                                 |
-| &emsp;userPhone     | string | 必要 | 用户手机号                               |
-| &emsp;userAddress   | string | 必要 | 用户地址                                 |
-| &emsp;userDescribe  | string | 必要 | 用户描述                                 |
+| 参数名称                | 类型   | 必要 | 描述                                     |
+| :---------------------- | :----- | :--- | :--------------------------------------- |
+| Header                  | &nbsp; | 必要 | 请求报文头                               |
+| &emsp;Authorization     | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
+| body                    | &nbsp; | 必要 | &nbsp;                                   |
+| &emsp;adminId           | string | 必要 | 管理员 id                                |
+| &emsp;&emsp;supplierId  | string | 必要 | 供应商 id                                |
+| &emsp;supplierName      | string | 必要 | 供应商名称                               |
+| &emsp;supplierPhone     | string | 必要 | 供应商联系方式                           |
+| &emsp;supplierAddress   | string | 必要 | 供应商地址                               |
+| &emsp;supplierDescribe  | string | 必要 | 供应商描述                               |
+| &emsp;supplierGoods     | array  | 必要 | 供应商商品数组                           |
+| &emsp;&emsp;catalogId   | string | 必要 | 商品类型 id                              |
+| &emsp;&emsp;catalogName | string | 必要 | 商品类型名称                             |
 
 请求实例：
 
 ```
 {
 	adminId: "123123123",
-	userId: "123231",
-	userName: "张三",
-	userPhone: "12312321321",
-	userAddress: "湖北省武汉市",
-	userDescribe: "撒后餐"
+	supplierId: "123131",
+	supplierName: "小米",
+	supplierPhone: "1123321323",
+	supplierAddress: "湖北省武汉市",
+	supplierDescribe: "最好的公司",
+	supplierGoods: [
+		{
+			catalogId: "1",
+			catalogName: "轮椅"
+		}，
+		{
+			catalogId: "2",
+			catalogName: "助听器"
+		}
+	]
 }
 ```
 

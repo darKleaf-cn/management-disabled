@@ -108,7 +108,7 @@
           "
           >取 消</el-button
         >
-        <el-button type="primary" @click="check">确 定</el-button>
+        <el-button type="primary" @click="check">确定并授权</el-button>
       </div>
     </el-dialog>
   </div>
@@ -208,6 +208,7 @@ export default {
             } else {
               Message('error', res.message);
             }
+						this.queryList();
           });
         })
         .catch(() => {});
