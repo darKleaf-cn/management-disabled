@@ -418,9 +418,7 @@
 | &emsp;supplierPhone     | string | 必要 | 供应商联系方式                           |
 | &emsp;supplierAddress   | string | 必要 | 供应商地址                               |
 | &emsp;supplierDescribe  | string | 必要 | 供应商描述                               |
-| &emsp;supplierGoods     | array  | 必要 | 供应商商品数组                           |
-| &emsp;&emsp;catalogId   | string | 必要 | 商品类型 id                              |
-| &emsp;&emsp;catalogName | string | 必要 | 商品类型名称                             |
+| &emsp;supplierGoods     | array  | 必要 | 供应商商品id数组                           |
 
 请求实例：
 
@@ -432,14 +430,8 @@
 	supplierAddress: "湖北省武汉市",
 	supplierDescribe: "最好的公司",
 	supplierGoods: [
-		{
-			catalogId: "1",
-			catalogName: "轮椅"
-		}，
-		{
-			catalogId: "2",
-			catalogName: "助听器"
-		}
+		"1", 
+		"2"
 	]
 }
 ```
@@ -516,9 +508,7 @@
 | &emsp;supplierPhone     | string | 必要 | 供应商联系方式                           |
 | &emsp;supplierAddress   | string | 必要 | 供应商地址                               |
 | &emsp;supplierDescribe  | string | 必要 | 供应商描述                               |
-| &emsp;supplierGoods     | array  | 必要 | 供应商商品数组                           |
-| &emsp;&emsp;catalogId   | string | 必要 | 商品类型 id                              |
-| &emsp;&emsp;catalogName | string | 必要 | 商品类型名称                             |
+| &emsp;supplierGoods     | array  | 必要 | 供应商商品id数组                           |
 
 请求实例：
 
@@ -531,14 +521,8 @@
 	supplierAddress: "湖北省武汉市",
 	supplierDescribe: "最好的公司",
 	supplierGoods: [
-		{
-			catalogId: "1",
-			catalogName: "轮椅"
-		}，
-		{
-			catalogId: "2",
-			catalogName: "助听器"
-		}
+		"1",
+		"2"
 	]
 }
 ```
