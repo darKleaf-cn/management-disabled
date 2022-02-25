@@ -9,6 +9,8 @@ import UserList from '../views/user/UserList';
 
 import Supplier from '../views/supplier/Supplier';
 
+import GoodsAdd from '../views/goods/GoodsAdd';
+
 import CommodityManage from '../views/commodity/CommodityManage';
 import CommodityClassify from '../views/commodity/CommodityClassify';
 import CommodityCreate from '../views/commodity/CommodityCreate';
@@ -84,12 +86,25 @@ const routes = [
       }
     ]
   },
-	{
+  {
+    path: '/',
+    component: Index,
+    icon: 'el-icon-upload2',
+    isSingle: true,
+    children: [
+      {
+        path: '/goodsAdd',
+        name: '创建商品',
+        component: GoodsAdd
+      }
+    ]
+  },
+  {
     path: '/',
     component: Index,
     icon: 'el-icon-user-solid',
-		isSingle: true,
-		children: [
+    isSingle: true,
+    children: [
       {
         path: '/user',
         name: '用户管理',
@@ -97,12 +112,12 @@ const routes = [
       }
     ]
   },
-	{
+  {
     path: '/',
     component: Index,
     icon: 'el-icon-truck',
-		isSingle: true,
-		children: [
+    isSingle: true,
+    children: [
       {
         path: '/supplier',
         name: '供应商管理',
