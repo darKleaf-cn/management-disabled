@@ -568,6 +568,7 @@
 ```
 {
 	adminId: "123123123",
+	goodsName: "轮椅"
 	page:1,
 	size:10
 }
@@ -882,5 +883,74 @@
 {
 	code: 200,
 	message: "成功"
+}
+```
+
+## 5 订单管理
+
+- **订单管理相关接口地址统一前缀：** /order
+
+### 4.1 订单列表
+
+- **地址：** /list
+
+#### 4.1.1 请求参数
+
+| 参数名称            | 类型   | 必要   | 描述                                     |
+| :------------------ | :----- | :----- | :--------------------------------------- |
+| Header              | &nbsp; | 必要   | 请求报文头                               |
+| &emsp;Authorization | string | 必要   | 验证用户登录后 token，没有登录则无该字段 |
+| body                | &nbsp; | 必要   | &nbsp;                                   |
+| &emsp;adminId       | string | 必要   | 管理员 id                                |
+| &emsp;orderId       | string | 不必要 | 订单号                                   |
+| &emsp;page          | int    | 必要   | 页数                                     |
+| &emsp;size          | int    | 必要   | 每页条数                                 |
+
+请求实例：
+
+```
+{
+	adminId: "123123123",
+	orderId： "2312321"
+	page:1,
+	size:10
+}
+```
+
+#### 4.1.2 返回结果
+
+| 参数名称               | 类型   | 必要 | 描述     |
+| :--------------------- | :----- | :--- | :------- |
+| code                   | int    | 必要 | 状态码   |
+| message                | string | 必要 |
+| data                   | object | 必要 | &nbsp;   |
+| &emsp;total            | int    | 必要 | 订单总数 |
+| &emsp;orderList        | array  | 必要 | 订单数组 |
+| &emsp;&emsp;orderId    | string | 必要 | 订单号   |
+| &emsp;&emsp;goodsId    | string | 必要 | 商品 id  |
+| &emsp;&emsp;goodsName  | string | 必要 | 商品名称 |
+| &emsp;&emsp;goodsImage | string | 必要 | 商品图片 |
+| &emsp;&emsp;goodsPrice | float  | 必要 | 商品价格 |
+| &emsp;&emsp;goodsNum   | int    | 必要 | 商品数量 |
+
+请求实例：
+
+```
+{
+	code: 200,
+	message: "成功"
+	data: {
+		total: 1,
+		orderList: [
+			{
+				orderId: "23123"
+				goodsId: "12312312",
+				goodsName: "小米轮椅",
+				goodsPrice: 100.0,
+				goodsImage："sdascfasfas",
+				goodsNum: 1
+			}
+		]
+	}
 }
 ```
