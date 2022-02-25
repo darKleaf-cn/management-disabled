@@ -13,11 +13,7 @@ import Goods from '../views/goods/Goods';
 
 import Sku from '../views/sku/Sku';
 
-import CommodityManage from '../views/commodity/CommodityManage';
-import CommodityClassify from '../views/commodity/CommodityClassify';
-import CommodityCreate from '../views/commodity/CommodityCreate';
-
-import OrderManage from '../views/order/OrderManage';
+import Order from '../views/order/Order';
 
 Vue.use(VueRouter);
 
@@ -53,38 +49,15 @@ const routes = [
     ]
   },
   {
-    path: '/commodity',
+    path: '/',
     component: Index,
-    name: '我的商品',
-    icon: 'el-icon-s-goods',
-    children: [
-      {
-        path: 'commodityManage',
-        name: '商品管理',
-        component: CommodityManage
-      },
-      {
-        path: 'commodityClassify',
-        name: '商品分类',
-        component: CommodityClassify
-      },
-      {
-        path: 'commodityCreate',
-        name: '创建商品',
-        component: CommodityCreate
-      }
-    ]
-  },
-  {
-    path: '/order',
-    component: Index,
-    name: '我的订单',
+    isSingle: true,
     icon: 'el-icon-s-order',
     children: [
       {
-        path: 'orderManage',
+        path: '/order',
         name: '订单管理',
-        component: OrderManage
+        component: Order
       }
     ]
   },
@@ -101,7 +74,7 @@ const routes = [
       }
     ]
   },
-	{
+  {
     path: '/',
     component: Index,
     icon: 'el-icon-s-shop',

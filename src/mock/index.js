@@ -3,7 +3,7 @@ import { commodityQueryList } from './commodity';
 import { catalogQueryList } from './catalog';
 import { register, login, logout, userList, userDelete, userUpdate, userAdd } from './user';
 import { uploadImage } from './image';
-import { orderQueryList } from './order';
+import { orderList } from './order';
 import { supplierAdd, supplierDelete, supplierList, supplierUpdate } from './supplier';
 import { goodsAdd, goodsDelete, goodsList, goodsUpdate, goodsBuy, goodsSkuAdd, goodsSkuCut } from './goods';
 
@@ -44,6 +44,6 @@ Mock.mock(/\/goods\/skuCut/, 'post', goodsSkuCut);
 Mock.mock(/\/upload-img/, 'post', uploadImage);
 
 // 订单相关
-Mock.mock(/\/order\/queryList/, 'get', orderQueryList);
+Mock.mock(/\/order\/list/, 'post', orderList);
 
 export default Mock;
