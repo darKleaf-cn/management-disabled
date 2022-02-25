@@ -11,6 +11,8 @@ import Supplier from '../views/supplier/Supplier';
 import GoodsAdd from '../views/goods/GoodsAdd';
 import Goods from '../views/goods/Goods';
 
+import Sku from '../views/sku/Sku';
+
 import CommodityManage from '../views/commodity/CommodityManage';
 import CommodityClassify from '../views/commodity/CommodityClassify';
 import CommodityCreate from '../views/commodity/CommodityCreate';
@@ -96,6 +98,19 @@ const routes = [
         path: '/goodsAdd',
         name: '创建商品',
         component: GoodsAdd
+      }
+    ]
+  },
+	{
+    path: '/',
+    component: Index,
+    icon: 'el-icon-s-shop',
+    isSingle: true,
+    children: [
+      {
+        path: '/sku',
+        name: '库存管理',
+        component: Sku
       }
     ]
   },
