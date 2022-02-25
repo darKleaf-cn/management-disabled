@@ -553,14 +553,15 @@
 
 #### 4.1.1 请求参数
 
-| 参数名称            | 类型   | 必要 | 描述                                     |
-| :------------------ | :----- | :--- | :--------------------------------------- |
-| Header              | &nbsp; | 必要 | 请求报文头                               |
-| &emsp;Authorization | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
-| body                | &nbsp; | 必要 | &nbsp;                                   |
-| &emsp;adminId       | string | 必要 | 管理员 id                                |
-| &emsp;page          | int    | 必要 | 页数                                     |
-| &emsp;size          | int    | 必要 | 每页条数                                 |
+| 参数名称            | 类型   | 必要   | 描述                                     |
+| :------------------ | :----- | :----- | :--------------------------------------- |
+| Header              | &nbsp; | 必要   | 请求报文头                               |
+| &emsp;Authorization | string | 必要   | 验证用户登录后 token，没有登录则无该字段 |
+| body                | &nbsp; | 必要   | &nbsp;                                   |
+| &emsp;adminId       | string | 必要   | 管理员 id                                |
+| &emsp;goodsName     | string | 不必要 | 商品名称                                 |
+| &emsp;page          | int    | 必要   | 页数                                     |
+| &emsp;size          | int    | 必要   | 每页条数                                 |
 
 请求实例：
 
@@ -583,6 +584,7 @@
 | &emsp;goodsList               | array  | 必要 | 商品数组       |
 | &emsp;&emsp;goodsId           | string | 必要 | 商品 id        |
 | &emsp;&emsp;goodsName         | string | 必要 | 商品名称       |
+| &emsp;&emsp;goodsImage        | string | 必要 | 商品图片       |
 | &emsp;&emsp;goodsSupplierId   | string | 必要 | 商品供应商 Id  |
 | &emsp;&emsp;goodsSupplierName | string | 必要 | 商品供应商名称 |
 | &emsp;&emsp;goodsPrice        | float  | 必要 | 商品价格       |
@@ -609,7 +611,8 @@
 				goodsSku: 100,
 				goodsCatalogId: "1",
 				goodsCatalogName: "轮椅",
-				goodsDescribe: "最好的轮椅"
+				goodsDescribe: "最好的轮椅"，
+				goodsImage："sdascfasfas"
 			}
 		]
 	}
@@ -629,6 +632,7 @@
 | body                  | &nbsp; | 必要 | &nbsp;                                   |
 | &emsp;adminId         | string | 必要 | 管理员 id                                |
 | &emsp;goodsName       | string | 必要 | 商品名称                                 |
+| &emsp;goodsImage      | string | 必要 | 商品图片                                 |
 | &emsp;goodsSupplierId | string | 必要 | 商品供应商                               |
 | &emsp;goodsPrice      | float  | 必要 | 商品价格                                 |
 | &emsp;goodsSku        | int    | 必要 | 商品出事库存                             |
@@ -645,7 +649,8 @@
 	goodsPrice: 10.0,
 	goodsSku: 10,
 	goodsCatalogId: "123213213",
-	goodsDescribe: "最好的轮椅"
+	goodsDescribe: "最好的轮椅",
+	goodsImage: "sfasfsa"
 }
 ```
 
@@ -749,11 +754,11 @@
 }
 ```
 
-### 4.4 商品出库
+### 4.5 商品出库
 
 - **地址：** /skuCut
 
-#### 4.4.1 请求参数
+#### 4.5.1 请求参数
 
 | 参数名称            | 类型   | 必要 | 描述                                     |
 | :------------------ | :----- | :--- | :--------------------------------------- |
@@ -774,7 +779,97 @@
 }
 ```
 
-#### 4.4.2 返回结果
+#### 4.5.2 返回结果
+
+| 参数名称 | 类型   | 必要 | 描述   |
+| :------- | :----- | :--- | :----- |
+| code     | int    | 必要 | 状态码 |
+| message  | string | 必要 |
+
+请求实例：
+
+```
+{
+	code: 200,
+	message: "成功"
+}
+```
+
+### 4.7 商品修改
+
+- **地址：** /update
+
+#### 4.7.1 请求参数
+
+| 参数名称              | 类型   | 必要 | 描述                                     |
+| :-------------------- | :----- | :--- | :--------------------------------------- |
+| Header                | &nbsp; | 必要 | 请求报文头                               |
+| &emsp;Authorization   | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
+| body                  | &nbsp; | 必要 | &nbsp;                                   |
+| &emsp;adminId         | string | 必要 | 管理员 id                                |
+| &emsp;goodsId         | string | 必要 | 商品 Id                                  |
+| &emsp;goodsName       | string | 必要 | 商品名称                                 |
+| &emsp;goodsImage      | string | 必要 | 商品图片                                 |
+| &emsp;goodsSupplierId | string | 必要 | 商品供应商                               |
+| &emsp;goodsPrice      | float  | 必要 | 商品价格                                 |
+| &emsp;goodsCatalogId  | string | 必要 | 商品类型 Id                              |
+| &emsp;goodsDescribe   | string | 必要 | 商品描述                                 |
+
+请求实例：
+
+```
+{
+	adminId: "123123123",
+	goodsId: "23123",
+	goodsName: "小米轮椅",
+	goodsSupplierId: "1123321323",
+	goodsPrice: 10.0,
+	goodsCatalogId: "123213213",
+	goodsDescribe: "最好的轮椅",
+	goodsImage: "sfasfsa"
+}
+```
+
+#### 4.7.2 返回结果
+
+| 参数名称 | 类型   | 必要 | 描述   |
+| :------- | :----- | :--- | :----- |
+| code     | int    | 必要 | 状态码 |
+| message  | string | 必要 |
+
+请求实例：
+
+```
+{
+	code: 200,
+	message: "成功"
+}
+```
+
+### 4.8 商品删除
+
+- **地址：** /delete
+
+#### 4.8.1 请求参数
+
+| 参数名称            | 类型   | 必要 | 描述                                     |
+| :------------------ | :----- | :--- | :--------------------------------------- |
+| Header              | &nbsp; | 必要 | 请求报文头                               |
+| &emsp;Authorization | string | 必要 | 验证用户登录后 token，没有登录则无该字段 |
+| body                | &nbsp; | 必要 | &nbsp;                                   |
+| &emsp;adminId       | string | 必要 | 管理员 id                                |
+| &emsp;goodsId       | string | 必要 | 商品 Id                                  |
+
+请求实例：
+
+```
+{
+	adminId: "123123123",
+	goodsId: "23123"
+}
+```
+
+#### 4.8.2 返回结果
 
 | 参数名称 | 类型   | 必要 | 描述   |
 | :------- | :----- | :--- | :----- |

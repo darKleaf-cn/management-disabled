@@ -44,6 +44,20 @@
       <el-form-item label="商品库存" prop="goodsSku">
         <el-input v-model="form.goodsSku" type="number" min="0"></el-input>
       </el-form-item>
+      <el-form-item label="商品图片" prop="goodsImage">
+        <el-upload
+          class="upload-demo"
+          action="#"
+					drag
+					:limit="1"
+					multiple
+					:http-request="Upload"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件</div>
+        </el-upload>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">立即创建</el-button>
         <el-button @click="reset">重置</el-button>
@@ -68,7 +82,8 @@ export default {
         goodsSupplierId: '',
         goodsCatalogId: '',
         goodsSku: 0,
-        goodsPrice: 0
+        goodsPrice: 0,
+        goodsImage: ''
       },
       rules: {
         goodsName: [
@@ -112,6 +127,13 @@ export default {
             message: '商品价格不能为空',
             trigger: 'change'
           }
+        ],
+        goodsImage: [
+          {
+            required: true,
+            message: '商品图片不能为空',
+            trigger: 'change'
+          }
         ]
       },
       catalogs: catalogs,
@@ -126,7 +148,6 @@ export default {
             adminId: this.adminId,
             ...this.form
           };
-					console.log(params);
           const res = await goodsAdd(params);
           if (res.code === 200) {
             Message('success', '添加成功');
@@ -139,7 +160,8 @@ export default {
             goodsSupplierId: '',
             goodsCatalogId: '',
             goodsSku: 0,
-            goodsPrice: 0
+            goodsPrice: 0,
+            goodsImage: ''
           };
         }
       });
@@ -151,7 +173,8 @@ export default {
         goodsSupplierId: '',
         goodsCatalogId: '',
         goodsSku: 0,
-        goodsPrice: 0
+        goodsPrice: 0,
+        goodsImage: ''
       };
     },
     async supplierQueryList() {
@@ -175,7 +198,15 @@ export default {
           break;
         }
       }
-    }
+    },
+		Upload(data) {
+			var reader = new FileReader();
+      reader.readAsDataURL(data.file);
+      const that = this;
+      reader.onload = function () {
+        that.form.goodsImage = reader.result;
+      };
+		}
   },
   computed: {
     ...mapState(['adminId'])

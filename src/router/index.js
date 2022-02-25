@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Index from '../views/index.vue';
-import Home from '../views/home/Home';
 
 import Login from '../views/login/Login';
 import Register from '../views/login/Register';
@@ -10,6 +9,7 @@ import UserList from '../views/user/UserList';
 import Supplier from '../views/supplier/Supplier';
 
 import GoodsAdd from '../views/goods/GoodsAdd';
+import Goods from '../views/goods/Goods';
 
 import CommodityManage from '../views/commodity/CommodityManage';
 import CommodityClassify from '../views/commodity/CommodityClassify';
@@ -34,19 +34,19 @@ const routes = [
   },
   {
     path: '/',
-    redirect: 'home',
+    redirect: 'goods',
     hidden: true
   },
   {
     path: '/',
     component: Index,
     isSingle: true,
-    icon: 'el-icon-s-home',
+    icon: 'el-icon-s-goods',
     children: [
       {
-        path: '/home',
-        component: Home,
-        name: '我的主页'
+        path: '/goods',
+        component: Goods,
+        name: '商品列表'
       }
     ]
   },

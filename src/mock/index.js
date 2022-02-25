@@ -5,7 +5,7 @@ import { register, login, logout, userList, userDelete, userUpdate, userAdd } fr
 import { uploadImage } from './image';
 import { orderQueryList } from './order';
 import { supplierAdd, supplierDelete, supplierList, supplierUpdate } from './supplier';
-import { goodsAdd } from './goods';
+import { goodsAdd, goodsDelete, goodsList, goodsUpdate, goodsBuy, goodsSkuAdd, goodsSkuCut } from './goods';
 
 Mock.setup({
   timeout: '300-600'
@@ -33,6 +33,12 @@ Mock.mock(/\/supplier\/update/, 'post', supplierUpdate);
 Mock.mock(/\/supplier\/add/, 'post', supplierAdd);
 
 Mock.mock(/\/goods\/add/, 'post', goodsAdd);
+Mock.mock(/\/goods\/delete/, 'post', goodsDelete);
+Mock.mock(/\/goods\/list/, 'post', goodsList);
+Mock.mock(/\/goods\/update/, 'post', goodsUpdate);
+Mock.mock(/\/goods\/buy/, 'post', goodsBuy);
+Mock.mock(/\/goods\/skuAdd/, 'post', goodsSkuAdd);
+Mock.mock(/\/goods\/skuCut/, 'post', goodsSkuCut);
 
 // 图片相关
 Mock.mock(/\/upload-img/, 'post', uploadImage);

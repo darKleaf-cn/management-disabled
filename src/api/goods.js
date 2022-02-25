@@ -8,6 +8,12 @@ export const goodsList = params => post('/goods/list', params);
 // 添加商品
 export const goodsAdd = params => post('/goods/add', params);
 
+// 修改商品
+export const goodsUpdate = params => post('/goods/update', params);
+
+// 删除商品
+export const goodsDelete = params => post('/goods/delete', params);
+
 // 购买商品
 export const goodsBuy = params => post('/goods/buy', params);
 
