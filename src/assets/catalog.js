@@ -18,5 +18,9 @@ export default [
 	{
     catalogId: '5',
     catalogName: '盲人打字机'
+  },
+  {
+    catalogId: '6',
+    catalogName: '助听器'
   }
 ];

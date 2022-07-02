@@ -56,7 +56,7 @@ const routes = [
     children: [
       {
         path: '/order',
-        name: '订单管理',
+        name: '审批管理',
         component: Order
       }
     ]

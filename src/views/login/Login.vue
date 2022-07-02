@@ -90,7 +90,7 @@ export default {
             Message('success', '登录成功');
             this.SET_USER(res.data);
             this.$router.push({
-              path: '/home'
+              path: '/goods'
             });
           } else {
             Message('error', res.message);

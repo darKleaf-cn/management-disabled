@@ -148,6 +148,8 @@ export default {
             adminId: this.adminId,
             ...this.form
           };
+          params.goodsPrice = parseInt(params.goodsPrice);
+          params.goodsSku = parseInt(params.goodsSku);
           const res = await goodsAdd(params);
           if (res.code === 200) {
             Message('success', '添加成功');

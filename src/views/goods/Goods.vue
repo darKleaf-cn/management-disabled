@@ -52,7 +52,7 @@
               size="small"
               plain
               @click="buy1(scope.row.goodsId)"
-              >购买</el-button
+              >申请</el-button
             >
             <el-button
               type="warning"
@@ -358,6 +358,8 @@ export default {
             ...this.goodsForm
           };
           console.log(params);
+          params.goodsPrice = parseInt(params.goodsPrice);
+          params.goodsSku = parseInt(params.goodsSku);
           const res = await goodsUpdate(params);
           if (res.code === 200) {
             Message('success', '修改成功');
@@ -461,6 +463,7 @@ export default {
         adminId: this.adminId,
         ...this.buyForm
       };
+      params.goodsNum = parseInt(params.goodsNum);
       const res = await goodsBuy(params);
       if (res.code === 200) {
         Message('success', '购买成功');
@@ -468,6 +471,7 @@ export default {
         Message('error', res.message);
       }
       this.buyCancel();
+      this.queryList();
     }
   },
   computed: {

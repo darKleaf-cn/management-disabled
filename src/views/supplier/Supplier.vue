@@ -43,7 +43,7 @@
         </el-table-column>
         <el-table-column
           prop="supplierPhone"
-          label="供应商手机号"
+          label="供应商联系方式"
           align="center"
         >
         </el-table-column>

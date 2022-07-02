@@ -46,6 +46,32 @@
         </el-table-column>
         <el-table-column prop="goodsNum" label="数量" align="center">
         </el-table-column>
+				<el-table-column align="center" label="审批">
+					<template slot-scope="scope">
+						<div v-if="scope.row.goodsState === 0" style="display: flex; justify-content: center">
+						<el-button
+              type="primary"
+              size="small"
+              plain
+              @click="success(scope.row.orderId)"
+              >成功</el-button
+            >
+            <el-button
+              type="danger"
+              size="small"
+              plain
+              @click="fail(scope.row.orderId)"
+              >失败</el-button
+            >
+						</div>
+						<div v-else-if="scope.row.goodsState === 1">
+							<el-tag type="success">已审批成功</el-tag>
+						</div>
+						<div v-else>
+							<el-tag type="danger">已审批失败</el-tag>
+						</div>
+					</template>
+				</el-table-column>
       </el-table>
     </div>
     <div class="pagination">
@@ -64,7 +90,7 @@
 </template>
 
 <script>
-import { orderList } from '@/api/order';
+import { orderList, orderSuccess, orderFail } from '@/api/order';
 import Message from '@/util/message';
 import { mapState } from 'vuex';
 export default {
@@ -118,6 +144,32 @@ export default {
       } else {
         Message('error', res.message);
       }
+    },
+		async success(orderId) {
+      const params = {
+        adminId: this.adminId,
+        orderId
+      };
+      const res = await orderSuccess(params);
+      if (res.code === 200) {
+        Message('success', '审批完成');
+      } else {
+        Message('error', res.message);
+      }
+			this.queryList();
+    },
+		async fail(orderId) {
+      const params = {
+        adminId: this.adminId,
+        orderId
+      };
+      const res = await orderFail(params);
+      if (res.code === 200) {
+        Message('success', '审批完成');
+      } else {
+        Message('error', res.message);
+      }
+			this.queryList();
     }
   },
   computed: {

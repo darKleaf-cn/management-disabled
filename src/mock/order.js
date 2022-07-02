@@ -10,7 +10,8 @@ export function orderList() {
         'goodsName|1': '@ctitle',
         'goodsPrice|1': 1212,
         'goodsNum|1': 12,
-        'goodsImage|1': Random.dataImage('200x100')
+        'goodsImage|1': Random.dataImage('200x100'),
+				'goodsState|0-2': 1
       }
     ]
   });
